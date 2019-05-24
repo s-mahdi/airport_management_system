@@ -1,4 +1,4 @@
-ToolSet: 14.0@C:\Program Files (x86)\Microsoft Visual Studio 14.0
+ToolSet: 3.0.7@H:\Program Files (x86)\Cygwin
 Options: 
 
 Options:

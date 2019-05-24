@@ -1,17 +1,17 @@
 #include <iostream>
 #include <ctime>
 #include <string>
+#include <vector>
 
 using namespace std;
 
 class Ticket {
 public:
-    Ticket(int flightNumber, time_t flightDate) : flightNumber(flightNumber), flightDate(flightDate) {}
 
 private:
     int flightNumber;
-    time_t flightDate;
-    time_t flightTime;
+    string flightDate;
+    string flightTime;
     string origin;
     string destination;
     string passengerName;
@@ -27,14 +27,31 @@ private:
     string lastName;
     string parentName;
     long long ID;
-    time_t birthday;
-
+    string birthday;
 };
 
+class Flight;
+
 class Plane {
+public:
+    Plane(int planeSerial, int numberOfSeats) : planeSerial(planeSerial), numberOfSeats(numberOfSeats) {}
+
+public:
+    int getPlaneSerial() const {
+        return planeSerial;
+    }
+
+    void setOnFlight(bool onFlight) {
+        Plane::onFlight = onFlight;
+    }
+
+
 private:
     int planeSerial;
     int numberOfSeats;
+    bool onFlight;
+
+    friend class Flight;
 };
 
 class Flight {
@@ -43,21 +60,41 @@ private:
     int planeSerial;
     string origin;
     string destination;
-    time_t date;
-    time_t time;
+    string date;
+    string time;
     int numberOfPassengers;
 
 public:
-    Flight(int flightNumber, int planeSerial, const string &origin, const string &destination, time_t date, time_t time,
-           int numberOfPassengers) : flightNumber(flightNumber), planeSerial(planeSerial), origin(origin),
-                                     destination(destination), date(date), time(time),
-                                     numberOfPassengers(numberOfPassengers) {}
+    Flight() {}
+
+    Flight(int flightNumber, int planeSerial, const string &origin, const string &destination, const string &date,
+           const string &time, int numberOfPassengers) : flightNumber(flightNumber), planeSerial(planeSerial),
+                                                         origin(origin), destination(destination), date(date),
+                                                         time(time), numberOfPassengers(numberOfPassengers) {}
+
+    void setFlight(Plane &plane) {
+        planeSerial = plane.planeSerial;
+
+        origin = "ker";
+        cout << "enter origin" << endl;
+
+        destination = "teh";
+        cout << "enter destination" << endl;
+
+        date = "2019/1/1";
+        cout << "enter flight date" << endl;
+
+        time = "13";
+        cout << "enter flight time" << endl;
+
+        numberOfPassengers = 99;
+        cout << "enter number of passengers" << endl;
+
+    };
 
 };
 
 void show_menu();
-
-void addFlight();
 
 void addTicket();
 
@@ -73,15 +110,46 @@ void flightReport();
 
 void passengerList();
 
+
 int main() {
-    int item = 0;
+    int item;
+    vector<Flight> flightsList;
+    vector<Plane> planeList;
+    for (int i = 1; i < 10; ++i) { // adding test flights
+        Plane p(i * 100, 100);
+        planeList.push_back(p);
+    }
     while (true) {
         show_menu();
         cin >> item;
         switch (item) {
-            case 1:
-                addFlight();
+            case 1: // add flight
+                cout << "available plane list: ";
+                for (auto &i : planeList) { // show planes serial list
+                    cout << " " << i.getPlaneSerial();
+                }
+
+                cout << "enter plane number" << endl;
+                int inputPlaneSerial;
+                cin >> inputPlaneSerial;
+
+                bool found;
+                for (auto &plane : planeList) { // check if such plane is available
+                    if (plane.getPlaneSerial() == inputPlaneSerial) {
+                        Flight flight;
+                        flight.setFlight(plane); // create flight
+                        flightsList.push_back(flight); // add to flights list
+                        cout << "flight added\n";
+                        found = true;
+                        break;
+                    }
+
+                }
+                if (!found) {
+                    cout << "flight not found\n";
+                }
                 break;
+
             case 2:
                 addTicket();
                 break;
@@ -145,9 +213,6 @@ void addTicket() {
 
 }
 
-void addFlight() {
-
-}
 
 void show_menu() {
     cout << "select one item" << endl;

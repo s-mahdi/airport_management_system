@@ -1,0 +1,1 @@
+/usr/bin/c++.exe -g  -Wl,--enable-auto-import CMakeFiles/Advaced_Programming.dir/main.cpp.o  -o Advaced_Programming.exe -Wl,--out-implib,libAdvaced_Programming.dll.a -Wl,--major-image-version,0,--minor-image-version,0 

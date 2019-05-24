@@ -1,9 +1,8 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/Advaced_Programming.dir/main.cpp.obj"
+  "CMakeFiles/Advaced_Programming.dir/main.cpp.o"
   "Advaced_Programming.pdb"
   "Advaced_Programming.exe"
-  "Advaced_Programming.exe.manifest"
-  "Advaced_Programming.lib"
+  "libAdvaced_Programming.dll.a"
 )
 
 # Per-language clean rules from dependency scanning.
